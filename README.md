@@ -26,6 +26,9 @@ O **AngularUniversity** é uma aplicação web responsiva que permite pesquisar 
 ### Tela de Favoritos
 ![Favorites](docs/screenshots/favorites.png)
 
+### Tela de Sobre
+![About](docs/screenshots/about.png)
+
 ---
 
 ## ⚙️ Tecnologias Utilizadas
