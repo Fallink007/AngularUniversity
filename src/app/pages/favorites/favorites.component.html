@@ -1,0 +1,62 @@
+<div class="favorites-page">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <h1><i class="bi bi-heart-fill"></i> Favoritos</h1>
+        <p>Suas universidades salvas para acesso rápido.</p>
+      </div>
+      <span class="count-badge" *ngIf="favorites.length > 0">{{ favorites.length }} salvas</span>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-row" *ngIf="favorites.length > 0">
+      <div class="filter-search">
+        <i class="bi bi-funnel"></i>
+        <input type="text" [(ngModel)]="filterText" placeholder="Filtrar favoritos...">
+      </div>
+      <div class="sort-group">
+        <button class="sort-btn" [class.active]="sortOrder==='az'" (click)="sortOrder='az'">
+          <i class="bi bi-sort-alpha-down"></i> A-Z
+        </button>
+        <button class="sort-btn" [class.active]="sortOrder==='za'" (click)="sortOrder='za'">
+          <i class="bi bi-sort-alpha-up"></i> Z-A
+        </button>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="favorites.length === 0">
+      <i class="bi bi-heart"></i>
+      <h3>Nenhum favorito ainda</h3>
+      <p>Pesquise universidades e clique no coração para salvá-las aqui.</p>
+      <a href="/results" class="btn-primary">
+        <i class="bi bi-search"></i> Pesquisar universidades
+      </a>
+    </div>
+
+    <!-- Grid -->
+    <div class="fav-grid" *ngIf="filtered.length > 0">
+      <div class="fav-card" *ngFor="let u of filtered">
+        <div class="fav-card-header">
+          <div class="uni-initial">{{ u.name.charAt(0) }}</div>
+          <button class="remove-btn" (click)="remove(u)" title="Remover favorito">
+            <i class="bi bi-heart-fill"></i>
+          </button>
+        </div>
+        <h3 class="uni-name">{{ u.name }}</h3>
+        <div class="uni-meta">
+          <span><i class="bi bi-geo-alt"></i> {{ u.country }}</span>
+          <span *ngIf="u.domains.length > 0"><i class="bi bi-globe"></i> {{ u.domains[0] }}</span>
+        </div>
+        <button class="visit-btn" (click)="openSite(u.web_pages[0])" *ngIf="u.web_pages.length > 0">
+          <i class="bi bi-box-arrow-up-right"></i> Visitar Site
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-filter" *ngIf="favorites.length > 0 && filtered.length === 0">
+      <i class="bi bi-funnel"></i>
+      <p>Nenhum favorito corresponde ao filtro.</p>
+    </div>
+  </div>
+</div>

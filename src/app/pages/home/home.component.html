@@ -1,0 +1,108 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="bi bi-globe2"></i> Catálogo Mundial
+      </div>
+      <h1>Descubra Universidades <span class="highlight">ao redor do mundo</span></h1>
+      <p>Pesquise e explore milhares de universidades de todos os países. Salve favoritos, compare e encontre a instituição ideal.</p>
+
+      <div class="search-box">
+        <div class="search-input-wrap">
+          <i class="bi bi-search search-icon"></i>
+          <input
+            type="text"
+            [(ngModel)]="country"
+            placeholder="Digite o nome de um país (ex: Brazil, Germany...)"
+            (keyup.enter)="search()"
+            list="countries-list"
+            class="search-input"
+          />
+          <datalist id="countries-list">
+            <option *ngFor="let c of countries" [value]="c"></option>
+          </datalist>
+        </div>
+        <button class="btn-search" (click)="search()" [disabled]="!country.trim()">
+          <i class="bi bi-arrow-right-circle-fill"></i> Pesquisar
+        </button>
+      </div>
+
+      <div class="quick-countries">
+        <span class="quick-label">Sugestões:</span>
+        <button *ngFor="let c of countries.slice(0,6)" class="quick-btn" (click)="searchFromHistory(c)">
+          {{ c }}
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="globe-wrap">
+        <i class="bi bi-mortarboard-fill globe-icon"></i>
+        <div class="orbit orbit-1"><span class="dot"></span></div>
+        <div class="orbit orbit-2"><span class="dot"></span></div>
+        <div class="orbit orbit-3"><span class="dot"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Cards -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="bi bi-building-fill"></i>
+          <div class="stat-info">
+            <span class="stat-num">10.000+</span>
+            <span class="stat-label">Universidades</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="bi bi-globe2"></i>
+          <div class="stat-info">
+            <span class="stat-num">200+</span>
+            <span class="stat-label">Países</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="bi bi-lightning-fill"></i>
+          <div class="stat-info">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Gratuito</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <i class="bi bi-heart-fill"></i>
+          <div class="stat-info">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Favoritos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search History -->
+  <section class="history-section" *ngIf="history.length > 0">
+    <div class="container">
+      <div class="section-header">
+        <h2><i class="bi bi-clock-history"></i> Histórico de Pesquisas</h2>
+        <button class="btn-clear" (click)="clearHistory()">
+          <i class="bi bi-trash3"></i> Limpar
+        </button>
+      </div>
+      <div class="history-grid">
+        <div class="history-card" *ngFor="let item of history" (click)="searchFromHistory(item.country)">
+          <div class="history-country">
+            <i class="bi bi-search"></i>
+            {{ item.country }}
+          </div>
+          <div class="history-meta">
+            <span><i class="bi bi-clock"></i> {{ item.date }}</span>
+            <span class="badge">{{ item.count }} univ.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

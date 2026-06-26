@@ -1,0 +1,134 @@
+<div class="results-page">
+  <!-- Search Bar -->
+  <div class="search-bar-section">
+    <div class="container">
+      <div class="search-inline">
+        <i class="bi bi-search"></i>
+        <input type="text" [(ngModel)]="country" (keyup.enter)="search()" placeholder="Pesquisar outro país..." class="search-input" />
+        <button class="btn-go" (click)="search()">Buscar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Stats -->
+  <div class="dashboard" *ngIf="!loading && universities.length > 0">
+    <div class="container">
+      <div class="dash-grid">
+        <div class="dash-card">
+          <span class="dash-num">{{ universities.length }}</span>
+          <span class="dash-label"><i class="bi bi-building"></i> Universidades</span>
+        </div>
+        <div class="dash-card">
+          <span class="dash-num">{{ uniqueDomains }}</span>
+          <span class="dash-label"><i class="bi bi-link-45deg"></i> Domínios únicos</span>
+        </div>
+        <div class="dash-card">
+          <span class="dash-num">{{ filtered.length }}</span>
+          <span class="dash-label"><i class="bi bi-funnel"></i> Filtrados</span>
+        </div>
+        <div class="dash-card accent">
+          <span class="dash-num">{{ favCount }}</span>
+          <span class="dash-label"><i class="bi bi-heart-fill"></i> Favoritos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-section" *ngIf="!loading && universities.length > 0">
+    <div class="container">
+      <div class="filters-row">
+        <div class="filter-search">
+          <i class="bi bi-funnel"></i>
+          <input
+            type="text"
+            [(ngModel)]="filterText"
+            (ngModelChange)="applyFilters()"
+            placeholder="Filtrar por nome (ex: Federal, State...)">
+        </div>
+        <div class="sort-group">
+          <button class="sort-btn" [class.active]="sortOrder==='az'" (click)="sortOrder='az'; applyFilters()">
+            <i class="bi bi-sort-alpha-down"></i> A-Z
+          </button>
+          <button class="sort-btn" [class.active]="sortOrder==='za'" (click)="sortOrder='za'; applyFilters()">
+            <i class="bi bi-sort-alpha-up"></i> Z-A
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading-wrap" *ngIf="loading">
+    <div class="spinner"></div>
+    <p>Buscando universidades em <strong>{{ country }}</strong>...</p>
+  </div>
+
+  <!-- Error -->
+  <div class="error-wrap" *ngIf="error">
+    <i class="bi bi-exclamation-triangle-fill"></i>
+    <p>{{ error }}</p>
+    <button (click)="load()">Tentar novamente</button>
+  </div>
+
+  <!-- Empty -->
+  <div class="empty-wrap" *ngIf="!loading && !error && universities.length === 0 && country">
+    <i class="bi bi-search"></i>
+    <p>Nenhuma universidade encontrada para <strong>{{ country }}</strong></p>
+    <small>Verifique o nome do país em inglês.</small>
+  </div>
+
+  <!-- No filter results -->
+  <div class="empty-wrap" *ngIf="!loading && universities.length > 0 && filtered.length === 0">
+    <i class="bi bi-funnel"></i>
+    <p>Nenhum resultado para o filtro aplicado.</p>
+    <button (click)="filterText=''; applyFilters()">Limpar filtro</button>
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid-section" *ngIf="!loading && paginated.length > 0">
+    <div class="container">
+      <div class="results-header">
+        <h2>{{ country }} <span class="badge">{{ filtered.length }} encontradas</span></h2>
+      </div>
+      <div class="uni-grid">
+        <div class="uni-card" *ngFor="let u of paginated" (click)="openSite(u.web_pages[0])">
+          <div class="uni-card-inner">
+            <div class="uni-header">
+              <div class="uni-initial">{{ u.name.charAt(0) }}</div>
+              <button class="fav-btn" (click)="$event.stopPropagation(); toggleFavorite(u)"
+                [title]="favoritesMap[u.name] ? 'Remover favorito' : 'Adicionar favorito'">
+                <i class="bi" [class.bi-heart-fill]="favoritesMap[u.name]" [class.bi-heart]="!favoritesMap[u.name]"></i>
+              </button>
+            </div>
+            <h3 class="uni-name">{{ u.name }}</h3>
+            <div class="uni-meta">
+              <span><i class="bi bi-geo-alt"></i> {{ u.country }}</span>
+              <span *ngIf="u.domains.length > 0"><i class="bi bi-globe"></i> {{ u.domains[0] }}</span>
+            </div>
+            <div class="uni-footer">
+              <span class="visit-hint"><i class="bi bi-box-arrow-up-right"></i> Visitar site</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination" *ngIf="totalPages > 1">
+        <button class="page-btn" (click)="changePage(currentPage-1)" [disabled]="currentPage === 1">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="page-btn" *ngFor="let p of pages"
+          [class.active]="p === currentPage"
+          (click)="changePage(p)"
+          [class.hidden]="p > currentPage + 2 || p < currentPage - 2">
+          {{ p }}
+        </button>
+        <button class="page-btn" (click)="changePage(currentPage+1)" [disabled]="currentPage === totalPages">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+        <span class="page-info">Página {{ currentPage }} de {{ totalPages }}</span>
+      </div>
+    </div>
+  </div>
+</div>

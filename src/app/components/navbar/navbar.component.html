@@ -1,0 +1,31 @@
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <i class="bi bi-mortarboard-fill"></i>
+      AngularUniversity
+    </a>
+
+    <button class="menu-toggle" (click)="toggleMenu()">
+      <i class="bi" [class.bi-list]="!isMenuOpen" [class.bi-x-lg]="isMenuOpen"></i>
+    </button>
+
+    <div class="nav-links" [class.open]="isMenuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" (click)="isMenuOpen=false">
+        <i class="bi bi-house"></i> Início
+      </a>
+      <a routerLink="/results" routerLinkActive="active" (click)="isMenuOpen=false">
+        <i class="bi bi-search"></i> Pesquisar
+      </a>
+      <a routerLink="/favorites" routerLinkActive="active" (click)="isMenuOpen=false">
+        <i class="bi bi-heart-fill"></i> Favoritos
+      </a>
+      <a routerLink="/about" routerLinkActive="active" (click)="isMenuOpen=false">
+        <i class="bi bi-info-circle"></i> Sobre
+      </a>
+
+      <button class="theme-toggle" (click)="toggleTheme()" [title]="isDark ? 'Modo Claro' : 'Modo Escuro'">
+        <i class="bi" [class.bi-sun-fill]="isDark" [class.bi-moon-fill]="!isDark"></i>
+      </button>
+    </div>
+  </div>
+</nav>

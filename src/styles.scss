@@ -1,0 +1,59 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+// ── Light Theme ──────────────────────────────────────────
+:root, [data-theme="light"] {
+  --primary: #4f46e5;
+  --primary-dark: #3730a3;
+  --primary-light: #ede9fe;
+  --primary-rgb: 79, 70, 229;
+  --bg-color: #f8f9fc;
+  --card-bg: #ffffff;
+  --navbar-bg: #ffffff;
+  --hero-bg: #f8f9fc;
+  --border-color: #e5e7eb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --hover-bg: #f3f4f6;
+}
+
+// ── Dark Theme ───────────────────────────────────────────
+[data-theme="dark"] {
+  --primary: #818cf8;
+  --primary-dark: #6366f1;
+  --primary-light: #1e1b4b;
+  --primary-rgb: 129, 140, 248;
+  --bg-color: #0f1117;
+  --card-bg: #1a1d27;
+  --navbar-bg: #13151f;
+  --hero-bg: #0f1117;
+  --border-color: #2d3048;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --hover-bg: #1e2133;
+}
+
+// ── Global Reset ─────────────────────────────────────────
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+.main-content {
+  min-height: calc(100vh - 65px);
+}
+
+// Smooth transitions for theme switch
+*, *::before, *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.15s ease;
+}
+
+// Scrollbar styling
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
