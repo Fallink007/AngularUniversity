@@ -19,12 +19,19 @@ O **AngularUniversity** é uma aplicação web responsiva que permite pesquisar 
 
 ### Tela Inicial — Pesquisa por País
 ![Home](docs/screenshots/home.png)
+![Home](docs/screenshots/homedark.png)
 
 ### Tela de Resultados — Lista de Universidades
 ![Results](docs/screenshots/results.png)
+![Results](docs/screenshots/resultsdark.png)
 
 ### Tela de Favoritos
 ![Favorites](docs/screenshots/favorites.png)
+![Favorites](docs/screenshots/favoritesdark.png)
+
+### Tela de Sobre
+![About](docs/screenshots/about.png)
+![About](docs/screenshots/aboutdark.png)
 
 ---
 
